@@ -5,8 +5,8 @@ sudo apt-get -y upgrade
 
 sudo apt install -y python3.8
 sudo apt install -y git
-sudo apt install -y curl
 sudo apt install wget
+sudo apt install curl
 sudo apt install -y python3-pip
 
 sudo apt install -y nodejs
@@ -20,7 +20,6 @@ pip3 install importlib-metadata==4.13.0
 pip3 install sphinx_rtd_theme==1.3.0
 
 
-sudo apt update
 wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 sudo dpkg -i google-chrome-stable_current_amd64.deb
 sudo apt --fix-broken install
