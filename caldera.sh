@@ -5,6 +5,7 @@ sudo apt-get -y upgrade
 
 sudo apt install -y python3.8
 sudo apt install -y git
+sudo apt install -y curl
 sudo apt install wget
 sudo apt install -y python3-pip
 
